@@ -1,0 +1,12 @@
+name: log_map
+title: log_map
+username:
+account: mitchelfruin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1627589
+bundleId: 2706483
+url: https://mitchelfruin.shinyapps.io/log_map/
+when: 1578159322.55994
+asMultiple: FALSE
+asStatic: FALSE
