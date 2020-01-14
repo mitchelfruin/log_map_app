@@ -1,0 +1,12 @@
+.js-irs-0 .irs-bar {
+border-top-color: #440154FF;
+border-bottom-color: #440154FF;
+} 
+
+.js-irs-0 .irs-bar-edge {
+border-color: #440154FF;
+}
+
+.js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {
+background: #440154FF;
+}

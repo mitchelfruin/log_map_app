@@ -8,6 +8,9 @@ library(plotly)
 
 ## UI ----
 ui <- fluidPage(
+    
+    # CSS
+    theme = "log_map_style.css",
 
     # Title
     titlePanel("The Logistic mApp"),
