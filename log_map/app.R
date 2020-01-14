@@ -157,6 +157,7 @@ server <- function(input, output) {
             plot_ly(x = ~generation,
                     y = ~x,
                     color = ~start_x,
+                    colors = c("#39568CFF", "#29AF7FFF", "#FDE725FF"),
                     hoverinfo = "text+name",
                     text = ~paste("Generation:", generation, "<br>",
                                   "Population:", round(x, 4)),
