@@ -13,18 +13,19 @@ ui <- fluidPage(
     theme = "log_map_style.css",
 
     # Title
-    titlePanel("The Logistic mApp"),
+    titlePanel(NULL),
 
     # Main content
     sidebarLayout(
         
         # 3 inputs for function: x, a, n
         sidebarPanel(
+            tags$p(tags$h2("The Logistic mApp",
+                           style = "margin-top: 0em; margin-bottom: 1em")),
             tags$p(tags$strong("Explore the logistic map:")),
             withMathJax(helpText("$$x_{t+1} = ax_{t}(1-x_{t})$$")),
             tags$p(tags$strong("1. Pick 3 starting values of"),
-                   tags$em("x"),
-                   tags$strong("to compare:")),
+                   tags$em("x")),
             splitLayout(numericInput(inputId = "x_1",
                                      label = NULL,
                                      min = 0,
@@ -43,9 +44,8 @@ ui <- fluidPage(
                                      max = 1,
                                      value = round(runif(1), 2),
                                      step = 0.05)),
-            tags$p(tags$strong("2. Pick a range for"),
-                   tags$em("a"),
-                   tags$strong("to compare across:")),
+            tags$p(tags$strong("2. Pick the range of values for"),
+                   tags$em("a")),
             sliderInput(inputId = "a_opts",
                         label = NULL,
                         min = 1,
@@ -60,13 +60,13 @@ ui <- fluidPage(
                          value = 100),
             actionButton(inputId = "go_sim",
                          label = "Simulate!"),
-            width = 3
+            width = 4
         ),
 
         # Output interactive plot
         mainPanel(
            plotlyOutput("interactive_plot", width = "100%", height = "100%"),
-           width = 9
+           width = 8
         )
     )
 )
