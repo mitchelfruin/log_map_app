@@ -82,8 +82,14 @@ ui <- fluidPage(
 
         # Output interactive plot
         mainPanel(
-           plotlyOutput("interactive_plot", width = "100%", height = "100%"),
-           width = 8
+            tags$h4("After you run your simulation an interactive graph will appear below. The goal of this interactivity is to build non-linear intuitions."),
+            tags$p("For a start:"),
+            tags$ul(tags$li("Click the play button to see how the simulations of your 3 populations change as the value of", tags$em("a"), "changes."),
+                    tags$li("Shift the slider manually to see how all the populations transition from steady state equilibria, to periodic cycles, to chaos."),
+                    tags$li("Hover over the lines to see what value a particular population has in a given generation for that value of", tags$em("a"), "."),
+                    tags$li("Pick starting values close to one another and see how for some values of", tags$em("a"), "the populations end up looking very different.")),
+            plotlyOutput("interactive_plot", width = "100%", height = "100%"),
+            width = 8
         )
     )
 )
