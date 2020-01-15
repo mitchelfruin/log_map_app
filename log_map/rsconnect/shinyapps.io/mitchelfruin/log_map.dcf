@@ -5,8 +5,8 @@ account: mitchelfruin
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1627589
-bundleId: 2706483
+bundleId: 2731408
 url: https://mitchelfruin.shinyapps.io/log_map/
-when: 1578159322.55994
+when: 1579115878.06733
 asMultiple: FALSE
 asStatic: FALSE
