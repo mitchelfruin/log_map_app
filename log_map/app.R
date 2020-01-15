@@ -28,15 +28,13 @@ ui <- fluidPage(
                }")),
 
     # Title
-    titlePanel(NULL),
+    titlePanel("The Logistic mApp"),
 
     # Main content
     sidebarLayout(
         
         # 3 inputs for function: x, a, n
         sidebarPanel(
-            tags$p(tags$h2("The Logistic mApp",
-                           style = "margin-top: 0em; margin-bottom: 0em")),
             tags$p("The simple system described by the logistic map can generate complex dynamics. Here's the crucial equation:"),
             tags$b(withMathJax(helpText("$$x_{t+1} = ax_{t}(1-x_{t})$$"))),
             tags$p("To understand its properties better we'll compare 3 different simulated populations."),
@@ -61,7 +59,7 @@ ui <- fluidPage(
                                      value = round(runif(1), 2),
                                      step = 0.05)),
             tags$p(tags$b("2. Choose how many generations to simulate.")),
-            tags$ul(tags$li("This determines how many times we'll interate through the equation.")),
+            tags$ul(tags$li("This determines how many times we'll iterate through the equation.")),
             numericInput(inputId = "n_opts",
                          label = NULL,
                          min = 10,
@@ -76,13 +74,13 @@ ui <- fluidPage(
                         value = c(2.5, 4),
                         step = 0.025),
             actionButton(inputId = "go_sim",
-                         label = tags$b("Simulate!")),
+                         label = tags$b("4. Simulate!")),
             width = 4
         ),
 
         # Output interactive plot
         mainPanel(
-            tags$h4("Use the interactive graph that appears after you click 'Simulate!' to build intuitions about non-linearity."),
+            tags$b("5. Use the interactive graph that appears to build intuitions about non-linearity."),
             tags$ul(tags$li("Click the play button to see how the simulations of your 3 populations change as the value of", tags$em("a"), "changes."),
                     tags$li("Shift the slider manually to see how all the populations transition from steady state equilibria, to periodic cycles, to chaos."),
                     tags$li("Hover over the lines to see what value a particular population has in a given generation for that value of", tags$em("a"), "."),
