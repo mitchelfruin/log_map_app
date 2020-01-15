@@ -8,53 +8,85 @@ library(plotly)
 
 ## UI ----
 ui <- fluidPage(
+    
+    # Style CSS
+    tags$style(type = "text/css",
+               HTML(
+               ".irs-from, .irs-to {
+               color: white;
+               background: #440154FF
+               }
+               .irs-bar {
+               border-top-color: #440154FF; 
+               border-bottom-color: #440154FF;
+               }
+               .irs-bar-edge {
+               border-color: #440154FF;
+               }
+               .irs-single, .irs-bar-edge, .irs-bar {
+               background: #440154FF;
+               }")),
 
     # Title
-    titlePanel("The Logistic Mapp."),
+    titlePanel("The Logistic mApp"),
 
     # Main content
     sidebarLayout(
         
         # 3 inputs for function: x, a, n
         sidebarPanel(
-            numericInput(inputId = "x_1",
-                         label = "Choose 1st population proportion:",
-                         min = 0,
-                         max = 1,
-                         value = 0.5,
-                         step = 0.05),
-            numericInput(inputId = "x_2",
-                         label = "Choose 2nd population proportion:",
-                         min = 0,
-                         max = 1,
-                         value = 0.25,
-                         step = 0.05),
-            numericInput(inputId = "x_3",
-                         label = "Choose 3rd population proportion:",
-                         min = 0,
-                         max = 1,
-                         value = 0.75,
-                         step = 0.05),
+            tags$p("The simple system described by the logistic map can generate complex dynamics. Here's the crucial equation:"),
+            tags$b(withMathJax(helpText("$$x_{t+1} = ax_{t}(1-x_{t})$$"))),
+            tags$p("To understand its properties better we'll compare 3 different simulated populations."),
+            tags$p(tags$b("1. Pick starting values for the 3 populations.")),
+            tags$ul(tags$li("Some randomly chosen defaults are provided.")),
+            splitLayout(numericInput(inputId = "x_1",
+                                     label = NULL,
+                                     min = 0,
+                                     max = 1,
+                                     value = round(runif(1), 2),
+                                     step = 0.05),
+                        numericInput(inputId = "x_2",
+                                     label = NULL,
+                                     min = 0,
+                                     max = 1,
+                                     value = round(runif(1), 2),
+                                     step = 0.05),
+                        numericInput(inputId = "x_3",
+                                     label = NULL,
+                                     min = 0,
+                                     max = 1,
+                                     value = round(runif(1), 2),
+                                     step = 0.05)),
+            tags$p(tags$b("2. Choose how many generations to simulate.")),
+            tags$ul(tags$li("This determines how many times we'll iterate through the equation.")),
+            numericInput(inputId = "n_opts",
+                         label = NULL,
+                         min = 10,
+                         max = 200,
+                         value = 100),
+            tags$p(tags$b("3. Select a range of values for the parameter", tags$em("a"), ".")),
+            tags$ul(tags$li("This determines how funky the dynamics are.")),
             sliderInput(inputId = "a_opts",
-                        label = "Choose a range of values for the tuning parameter:",
+                        label = NULL,
                         min = 1,
                         max = 5,
-                        value = c(2, 4),
-                        step = 0.1),
-            numericInput(inputId = "n_opts",
-                         label = "Choose the number of generations:",
-                         min = 10,
-                         max = 100,
-                         value = 75),
+                        value = c(2.5, 4),
+                        step = 0.025),
             actionButton(inputId = "go_sim",
-                         label = "Simulate!"),
-            width = 3
+                         label = tags$b("4. Simulate!")),
+            width = 4
         ),
 
         # Output interactive plot
         mainPanel(
-           plotlyOutput("interactive_plot", width = "100%", height = "100%"),
-           width = 9
+            tags$b("5. Use the interactive graph that appears to build intuitions about non-linearity."),
+            tags$ul(tags$li("Click the play button to see how the simulations of your 3 populations change as the value of", tags$em("a"), "changes."),
+                    tags$li("Shift the slider manually to see how all the populations transition from steady state equilibria, to periodic cycles, to chaos."),
+                    tags$li("Hover over the lines to see what value a particular population has in a given generation for that value of", tags$em("a"), "."),
+                    tags$li("Pick starting values close to one another and see how for some values of", tags$em("a"), "the populations end up looking very different.")),
+            plotlyOutput("interactive_plot", width = "100%", height = "100%"),
+            width = 8
         )
     )
 )
@@ -153,13 +185,17 @@ server <- function(input, output) {
 
     output$interactive_plot <- renderPlotly({
         plot_df() %>%
-            plot_ly(x = ~generation,
-                    y = ~x,
-                    color = ~start_x,
-                    hoverinfo = "text+name",
-                    text = ~paste("Generation:", generation, "<br>",
-                                  "Population:", round(x, 4)),
-                    frame = ~a) %>%
+            plot_ly(
+                # Set aesthetics
+                x = ~generation,
+                y = ~x,
+                color = ~start_x,
+                hoverinfo = "text+name",
+                text = ~paste("Generation:", generation, "<br>",
+                              "Population:", round(x, 4)),
+                frame = ~a,
+                # Set labels
+                colors = c("#39568CFF", "#29AF7FFF", "#FDE725FF")) %>%
             add_lines() %>%
             animation_opts(frame = 800,
                            transition = 100,
@@ -169,7 +205,8 @@ server <- function(input, output) {
                                                  size = 25),
                              hide = FALSE) %>%
             layout(xaxis = list(title = "Generation"),
-                   yaxis = list(title = "Pop. Prop."))
+                   yaxis = list(title = "Pop. Prop.", range = c(0, 1)),
+                   legend = list(y = 0.5))
     }
     )
 }
