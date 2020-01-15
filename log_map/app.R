@@ -9,8 +9,23 @@ library(plotly)
 ## UI ----
 ui <- fluidPage(
     
-    # CSS
-    theme = "log_map_style.css",
+    # Style CSS
+    tags$style(type = "text/css",
+               HTML(
+               ".irs-from, .irs-to {
+               color: white;
+               background: #440154FF
+               }
+               .irs-bar {
+               border-top-color: #440154FF; 
+               border-bottom-color: #440154FF;
+               }
+               .irs-bar-edge {
+               border-color: #440154FF;
+               }
+               .irs-single, .irs-bar-edge, .irs-bar {
+               background: #440154FF;
+               }")),
 
     # Title
     titlePanel(NULL),
