@@ -182,7 +182,7 @@ server <- function(input, output) {
                                                  size = 25),
                              hide = FALSE) %>%
             layout(xaxis = list(title = "Generation"),
-                   yaxis = list(title = "Pop. Prop."))
+                   yaxis = list(title = "Pop. Prop.", range = c(0, 1)))
     }
     )
 }
