@@ -76,14 +76,13 @@ ui <- fluidPage(
                         value = c(2.5, 4),
                         step = 0.025),
             actionButton(inputId = "go_sim",
-                         label = "Simulate!"),
+                         label = tags$b("Simulate!")),
             width = 4
         ),
 
         # Output interactive plot
         mainPanel(
-            tags$h4("After you run your simulation an interactive graph will appear below. The goal of this interactivity is to build non-linear intuitions."),
-            tags$p("For a start:"),
+            tags$h4("Use the interactive graph that appears after you click 'Simulate!' to build intuitions about non-linearity."),
             tags$ul(tags$li("Click the play button to see how the simulations of your 3 populations change as the value of", tags$em("a"), "changes."),
                     tags$li("Shift the slider manually to see how all the populations transition from steady state equilibria, to periodic cycles, to chaos."),
                     tags$li("Hover over the lines to see what value a particular population has in a given generation for that value of", tags$em("a"), "."),
@@ -188,14 +187,17 @@ server <- function(input, output) {
 
     output$interactive_plot <- renderPlotly({
         plot_df() %>%
-            plot_ly(x = ~generation,
-                    y = ~x,
-                    color = ~start_x,
-                    colors = c("#39568CFF", "#29AF7FFF", "#FDE725FF"),
-                    hoverinfo = "text+name",
-                    text = ~paste("Generation:", generation, "<br>",
-                                  "Population:", round(x, 4)),
-                    frame = ~a) %>%
+            plot_ly(
+                # Set aesthetics
+                x = ~generation,
+                y = ~x,
+                color = ~start_x,
+                hoverinfo = "text+name",
+                text = ~paste("Generation:", generation, "<br>",
+                              "Population:", round(x, 4)),
+                frame = ~a,
+                # Set labels
+                colors = c("#39568CFF", "#29AF7FFF", "#FDE725FF")) %>%
             add_lines() %>%
             animation_opts(frame = 800,
                            transition = 100,
@@ -205,7 +207,8 @@ server <- function(input, output) {
                                                  size = 25),
                              hide = FALSE) %>%
             layout(xaxis = list(title = "Generation"),
-                   yaxis = list(title = "Pop. Prop.", range = c(0, 1)))
+                   yaxis = list(title = "Pop. Prop.", range = c(0, 1)),
+                   legend = list(y = 0.5))
     }
     )
 }
